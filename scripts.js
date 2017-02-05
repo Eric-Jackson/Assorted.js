@@ -24,21 +24,13 @@
 
   }
 
-  Filtered.prototype.filter = function() {
+  Filtered.prototype.filter = function(filterBy, newDirection) {
     this.list = document.querySelector(this.options.selector);
     this.listItems = this.list.children;
     this.sandbox = document.createDocumentFragment();
     this.filteredList = [];
-
-    var allTypes = [
-          "az",
-          "distance",
-          "shuffle"
-        ],
-        allDirections = [
-          "asc",
-          "desc"
-        ];
+    var filterBy = (filterBy) ? filterBy : this.options.type,
+        direction = (newDirection) ? newDirection : this.options.direction;
 
     for (var i in this.listItems) { // Add list items to filteredList property
       if (typeof this.listItems[i] === "object") {
@@ -46,21 +38,15 @@
       }
     }
 
-    switch(this.options.type) {
+    switch(filterBy) {
       case "az":
         this.filteredList.sort(function(a, b) { // Sort this.filteredList array
-          return a.dataset.title == b.dataset.title ? 0 : (a.dataset.title > b.dataset.title ? 1 : -1);
-        });
-        break;
-      case "distance":
-        this.filteredList.sort(function(a, b) { // Sort this.filteredList array by data-distance attr
-          return a.dataset.distance == b.dataset.distance ? 0 : (a.dataset.distance > b.dataset.distance ? 1 : -1);
+          return a.dataset.filtered == b.dataset.filtered ? 0 : (a.dataset.filtered > b.dataset.filtered ? 1 : -1);
         });
         break;
       case "shuffle":
         this.filteredList.sort(function(a, b) {
           var random = Math.floor(Math.random()*199) - 99;
-          console.log(random);
           return random;
         });
         break;
