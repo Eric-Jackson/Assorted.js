@@ -1,5 +1,5 @@
 # Filtered
-Vanilla JS Plugin for Filtering Everything
+Vanilla JS Plugin for Sorting Everything
 
 1) Create list resembling this HTML:
 ```html
