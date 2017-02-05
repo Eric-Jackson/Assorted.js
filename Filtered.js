@@ -6,7 +6,7 @@
 
     var defaults = {
       selector: '.filter-me',
-      type: "shuffle",
+      type: "az",
       direction: "asc"
     }
 
