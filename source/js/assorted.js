@@ -1,11 +1,10 @@
-// immediately invoked functional expression
 (function() {
   'use strict';
 
-  window.Filtered = function(options) {
+  window.Assorted = function(options) {
 
     var defaults = {
-      selector: '.filter-me',
+      selector: '.sort-me',
       type: "az",
       direction: "asc"
     }
@@ -19,47 +18,47 @@
 
     this.list = document.querySelector(this.options.selector);
     this.listItems = this.list.children;
-    this.filteredList = [];
+    this.assortedList = [];
     this.sandbox = document.createDocumentFragment();
 
   }
 
-  Filtered.prototype.filter = function(filterBy, newDirection) {
+  Assorted.prototype.filter = function(filterBy, newDirection) {
     var filter = filterBy ? filterBy : this.options.type,
         direction = newDirection ? newDirection : this.options.direction;
 
-    rebuildNodeList(this.filteredList, this.listItems); // Rebuild this.listItems as this.filteredList
+    rebuildNodeList(this.assortedList, this.listItems); // Rebuild this.listItems as this.assortedList
     this.sort(filter, direction);
 
-    for (var i = 0; i < this.filteredList.length; ++i) {
-      this.sandbox.appendChild(this.filteredList[i]);
+    for (var i = 0; i < this.assortedList.length; ++i) {
+      this.sandbox.appendChild(this.assortedList[i]);
     }
 
     this.list.appendChild(this.sandbox);
   }
 
-  Filtered.prototype.sort = function(filter, direction) {
+  Assorted.prototype.sort = function(filter, direction) {
     switch(filter) {
       case "az":
-        this.filteredList.sort(function(a, b) { // Sort by data-filtered
-          return a.dataset.filtered == b.dataset.filtered ? 0 : (a.dataset.filtered > b.dataset.filtered ? 1 : -1);
+        this.assortedList.sort(function(a, b) { // Sort by data-assorted
+          return a.dataset.assorted == b.dataset.assorted ? 0 : (a.dataset.assorted > b.dataset.assorted ? 1 : -1);
         });
         break;
       case "shuffle":
-        this.filteredList.sort(function(a, b) { // Sort randomly
+        this.assortedList.sort(function(a, b) { // Sort randomly
           var random = Math.floor(Math.random()*199) - 99;
           return random;
         });
         break;
       default:
         var type = this.options.type;
-        this.filteredList.sort(function(a, b) { // Sort by any data type
+        this.assortedList.sort(function(a, b) { // Sort by any data type
           return a.dataset[type] == b.dataset[type] ? 0 : (a.dataset[type] > b.dataset[type] ? 1 : -1);
         });
     }
 
     if (direction === "desc") { // Reverse if "desc"
-      this.filteredList.reverse();
+      this.assortedList.reverse();
     }
   }
 
