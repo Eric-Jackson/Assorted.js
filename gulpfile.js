@@ -9,8 +9,9 @@ gulp.task('default', ['watch']);
 
 gulp.task('ts', () => {
   return rollup({
-    entry: './source/ts/Filtered.ts',
+    entry: './source/ts/assorted.ts',
     format: 'iife',
+    moduleName: 'Assorted',
     plugins: [
       typescript(),
       babel({
@@ -18,10 +19,10 @@ gulp.task('ts', () => {
       }),
       // uglify()
     ]
-  }).pipe(source('Filtered.js'))
+  }).pipe(source('assorted.js'))
   .pipe(gulp.dest('./dist/js'))
 });
 
 gulp.task('watch', () => {
-  gulp.watch('source/ts/*.ts', ['ts']);
+  gulp.watch(['source/ts/*.ts', 'source/ts/lib/*.ts'], ['ts']);
 });
