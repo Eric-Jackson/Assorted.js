@@ -7,91 +7,96 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-(function () {
-  'use strict';
+window.Assorted = function (options) {
 
-  window.Assorted = function (options) {
-
-    var defaults$$1 = {
-      selector: '.sort-me',
-      type: "az",
-      direction: "asc"
-    };
-
-    // Create options by extending defaults with the passed in arugments
-    if (options && (typeof options === 'undefined' ? 'undefined' : _typeof(options)) === "object") {
-      this.options = extendDefaults(defaults$$1, options);
-    } else {
-      this.options = defaults$$1;
-    }
-
-    this.list = document.querySelector(this.options.selector);
-    this.listItems = this.list.children;
-    this.assortedList = [];
-    this.sandbox = document.createDocumentFragment();
+  var defaults$$1 = {
+    selector: '.assort-me',
+    type: "az",
+    direction: "asc",
+    loadInit: true
   };
 
-  Assorted.prototype.filter = function (filterBy, newDirection) {
-    var filter = filterBy ? filterBy : this.options.type,
-        direction = newDirection ? newDirection : this.options.direction;
+  this.options = setOptions(options, defaults$$1);
+  this.list = document.querySelector(this.options.selector);
+  this.listItems = this.list.children;
+  this.assortedList = [];
+  this.sandbox = document.createDocumentFragment();
 
-    rebuildNodeList(this.assortedList, this.listItems); // Rebuild this.listItems as this.assortedList
-    this.sort(filter, direction);
+  if (this.options.loadInit === true) {
+    this.render();
+  }
+};
 
-    for (var i = 0; i < this.assortedList.length; ++i) {
-      this.sandbox.appendChild(this.assortedList[i]);
-    }
+Assorted.prototype.render = function (options) {
+  this.options = setOptions(options, this.options);
+  this.assortedList = rebuildNodeList(this.assortedList, this.listItems);
+  this.sorter(this.options.type, this.options.direction);
 
-    this.list.appendChild(this.sandbox);
-  };
+  for (var i = 0; i < this.assortedList.length; ++i) {
+    this.sandbox.appendChild(this.assortedList[i]);
+  }
 
-  Assorted.prototype.sort = function (filter, direction) {
-    switch (filter) {
+  this.list.appendChild(this.sandbox);
+};
+
+Assorted.prototype.sorter = function () {
+  var _this = this;
+
+  (function () {
+    switch (_this.options.type) {
       case "az":
-        this.assortedList.sort(function (a, b) {
+        _this.assortedList.sort(function (a, b) {
           // Sort by data-assorted
           return a.dataset.assorted == b.dataset.assorted ? 0 : a.dataset.assorted > b.dataset.assorted ? 1 : -1;
         });
         break;
       case "shuffle":
-        this.assortedList.sort(function (a, b) {
+        _this.assortedList.sort(function (a, b) {
           // Sort randomly
-          var random = Math.floor(Math.random() * 199) - 99;
-          return random;
+          return Math.floor(Math.random() * 199) - 99;
         });
         break;
       default:
-        var type = this.options.type;
-        this.assortedList.sort(function (a, b) {
+        var thisType = _this.options.type;
+        _this.assortedList.sort(function (a, b) {
           // Sort by any data type
-          return a.dataset[type] == b.dataset[type] ? 0 : a.dataset[type] > b.dataset[type] ? 1 : -1;
+          return a.dataset[thisType] == b.dataset[thisType] ? 0 : a.dataset[thisType] > b.dataset[thisType] ? 1 : -1;
         });
     }
+  })();
 
-    if (direction === "desc") {
-      // Reverse if "desc"
-      this.assortedList.reverse();
-    }
-  };
+  if (this.options.direction === "desc") {
+    // Reverse if "desc"
+    this.assortedList.reverse();
+  }
+};
 
-  function rebuildNodeList(newList, oldList) {
-    for (var i in oldList) {
-      if (_typeof(oldList[i]) === "object") {
-        // If oldList[i] is a Node
-        newList.push(oldList[i]); // Add to newList array
-      }
+function setOptions(options, defaults$$1) {
+  if (options && (typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
+    return extendDefaults(defaults$$1, options);
+  } else {
+    return defaults$$1;
+  }
+}
+
+function rebuildNodeList(newList, oldList) {
+  for (var i in oldList) {
+    if (_typeof(oldList[i]) === "object") {
+      // If oldList[i] is a Node
+      newList.push(oldList[i]); // Add to newList array
     }
   }
+  return newList;
+}
 
-  // Utility method to extend defaults with user options
-  function extendDefaults(source, properties) {
-    for (var property in properties) {
-      if (properties.hasOwnProperty(property)) {
-        source[property] = properties[property];
-      }
+// Utility method to extend defaults with user options
+function extendDefaults(source, properties) {
+  for (var property in properties) {
+    if (properties.hasOwnProperty(property)) {
+      source[property] = properties[property];
     }
-    return source;
   }
-})();
+  return source;
+}
 
 }());
