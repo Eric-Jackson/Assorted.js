@@ -71,6 +71,15 @@ Assorted.prototype.sorter = function () {
   }
 };
 
+Assorted.prototype.addEvent = function (assortObj, selector, event, setting, type) {
+  document.querySelector(selector).addEventListener(event, function (e) {
+    e.preventDefault();
+    var settings = {};
+    settings[setting] = type;
+    assortObj.render(settings);
+  });
+};
+
 function setOptions(options, defaults$$1) {
   if (options && (typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
     return extendDefaults(defaults$$1, options);

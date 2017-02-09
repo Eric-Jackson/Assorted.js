@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example use of Assorted</title>
+  </head>
+  <body>
+  <div class="assorted-controls">
+    <div class="assorted-controls__type">
+      <strong>Sort By:</strong><br>
+      <a href="#" class="sortByName">A-Z</a> - <a href="#" class="sortByRandom">Shuffle</a>
+    </div>
+    <br>
+    <div class="assorted-controls__direction">
+      <strong>Direction</strong><br>
+      <a href="#" class="sortDirAsc">ASC</a> - <a href="#" class="sortDirDesc">DESC<a>
+    </div>
+  </div>
+  <ul class="assort-me">
+    <li data-assorted="Tester" data-distance="2">Tester</li>
+    <li data-assorted="Yah man" data-distance="1">Yah man</li>
+    <li data-assorted="Sup Mah Dude" data-distance="3">Sup Mah Dude</li>
+    <li data-assorted="Far Out" data-distance="4">Far Out</li>
+    <li data-assorted="Tester" data-distance="2">Tester</li>
+    <li data-assorted="Yah man" data-distance="1">Yah man</li>
+    <li data-assorted="Sup Mah Dude" data-distance="3">Sup Mah Dude</li>
+    <li data-assorted="Far Out" data-distance="4">Far Out</li>
+    <li data-assorted="Tester" data-distance="2">Tester</li>
+    <li data-assorted="Yah man" data-distance="1">Yah man</li>
+    <li data-assorted="Sup Mah Dude" data-distance="3">Sup Mah Dude</li>
+    <li data-assorted="Far Out" data-distance="4">Far Out</li>
+    <li data-assorted="Tester" data-distance="2">Tester</li>
+    <li data-assorted="Yah man" data-distance="1">Yah man</li>
+    <li data-assorted="Sup Mah Dude" data-distance="3">Sup Mah Dude</li>
+    <li data-assorted="Far Out" data-distance="4">Far Out</li>
+  </ul>
+
+  <script src="./dist/js/assorted.min.js"></script>
+  <script>
+    var testing = new Assorted();
+    testing.render();
+
+    testing.addEvent(testing, '.sortByName', 'click', 'type', 'az');
+    testing.addEvent(testing, '.sortByRandom', 'click', 'type', 'shuffle');
+    testing.addEvent(testing, '.sortDirAsc', 'click', 'direction', 'asc');
+    testing.addEvent(testing, '.sortDirDesc', 'click', 'direction', 'desc');
+  </script>
+  </body>
+</html>

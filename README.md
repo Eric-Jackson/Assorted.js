@@ -3,7 +3,7 @@ Vanilla JS Plugin for Sorting Everything
 
 1) Add script to HTML and create list resembling this HTML:
 ```html
-<script type="text/javascript" src="./dist/js/filtered.min.js" />
+<script type="text/javascript" src="./dist/js/filtered.min.js"></script>
 ```
 
 ```html
