@@ -36,5 +36,5 @@ gulp.task('js:production', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch('source/js/*.js', ['js']);
+  gulp.watch('source/js/*.js', ['js', 'js:production']);
 });
